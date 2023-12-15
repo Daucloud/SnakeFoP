@@ -1,0 +1,99 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <cctype>
+
+const int MAX_MAP_SIZE = 21;
+const char WALL_SYMBOL = '|';
+const char BLANK_SYMBOL = ' ';
+const char OBSTACLE_SYMBOL = 'O';
+const char VACANT_SYMBOL = '.';
+
+bool is_wall_symbol(char c) {
+   return c == WALL_SYMBOL;
+}
+
+bool is_blank_symbol(char c) {
+   return c == BLANK_SYMBOL;
+}
+
+bool is_obstacle_symbol(char c) {
+   return c == OBSTACLE_SYMBOL;
+}
+
+bool is_vacant_symbol(char c) {
+   return c == VACANT_SYMBOL;
+}
+
+bool is_valid_symbol(char c) {
+   return is_wall_symbol(c) || is_blank_symbol(c) || is_obstacle_symbol(c);
+}
+
+bool is_valid_coordinate(int x, int y, int size) {
+   return x >= 0 && x < size && y >= 0 && y < size;
+}
+
+void print_map(const std::vector<std::vector<char>>& map) {
+   for (const auto& row : map) {
+       for (char c : row) {
+           std::cout << c;
+       }
+       std::cout << std::endl;
+   }
+}
+
+void draw_wall(char c) {
+   std::cout << "\033[31m" << c << "\033[0m";
+}
+
+void draw_vacant(char c) {
+   std::cout << "\033[32m" << c << "\033[0m";
+}
+
+void draw_obstacle(char c) {
+   std::cout << "\033[33m" << c << "\033[0m";
+}
+
+void draw_map(const std::vector<std::vector<char>>& map) {
+   for (const auto& row : map) {
+       for (char c : row) {
+           if (is_wall_symbol(c)) {
+               draw_wall(c);
+           } else if (is_obstacle_symbol(c)) {
+               draw_obstacle(c);
+           } else {
+               draw_vacant(c);
+           }
+       }
+       std::cout << std::endl;
+   }
+}
+
+void add_obstacle(std::vector<std::vector<char>>& map, int x, int y) {
+   if (is_valid_coordinate(x, y, map.size()) && is_vacant_symbol(map[x][y])) {
+       map[x][y] = OBSTACLE_SYMBOL;
+   }
+}
+
+void remove_obstacle(std::vector<std::vector<char>>& map, int x, int y) {
+   if (is_valid_coordinate(x, y, map.size()) && is_obstacle_symbol(map[x][y])) {
+       map[x][y] = VACANT_SYMBOL;
+   }
+}
+
+void set_wall(std::vector<std::vector<char>>& map, int x, int y, bool is_virtual) {
+   if (is_valid_coordinate(x, y, map.size())) {
+       if (is_virtual) {
+           map[x][y] = BLANK_SYMBOL;
+       } else {
+           map[x][y] = WALL_SYMBOL;
+       }
+   }
+}
+
+void load_map(std::vector<std::vector<char>>& map, const std::string& filename) {
+   std::ifstream file(filename);
+   if (file.is_open()) {
+       int rows, cols;
+       file >> rows
