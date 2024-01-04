@@ -1,3 +1,0 @@
-D:\cmake-3.28.1-windows-x86_64\cmake-3.28.1-windows-x86_64\bin\cmake.exe -E rm -f CMakeFiles\SnakeFoP.dir/objects.a
-D:\x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0\mingw64\bin\ar.exe qc CMakeFiles\SnakeFoP.dir/objects.a @CMakeFiles\SnakeFoP.dir\objects1.rsp
-D:\x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\SnakeFoP.dir/objects.a -Wl,--no-whole-archive -o SnakeFoP.exe -Wl,--out-implib,libSnakeFoP.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\SnakeFoP.dir\linkLibs.rsp
